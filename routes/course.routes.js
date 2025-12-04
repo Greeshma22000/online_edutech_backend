@@ -42,6 +42,12 @@ router.get('/:id', async (req, res) => {
 router.post('/', requireAuth, requireRole(['instructor', 'admin']), async (req, res) => {
   const { title, description, thumbnail_url, is_premium = false, price = 0 } = req.body || {};
   const instructor_id = req.user.id;
+
+  
+  console.log("📌 Incoming course data:", req.body);
+  console.log("📌 Instructor ID:", instructor_id);
+
+
   const { data, error } = await supabaseAdmin
     .from('courses')
     .insert([{ title, description, instructor_id, thumbnail_url, is_premium, price }])
